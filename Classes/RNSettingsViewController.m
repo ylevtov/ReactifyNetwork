@@ -14,6 +14,8 @@
 
 @implementation RNSettingsViewController
 
+@synthesize projects, projectsDict;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -46,7 +48,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 1;
+    return [self.projects count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -55,10 +57,48 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    projectsDict = [projects objectAtIndex: indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", [projectsDict objectForKey:@"Title"]];
     
-    cell.textLabel.text = @"Test";
+    UISwitch *projectSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 70, 20)];
+    BOOL defaultBool = [[projectsDict objectForKey:@"Default"] boolValue];
+    NSLog(@"Project title and default: %@, %i", [projectsDict objectForKey:@"Title"], defaultBool);
+    projectSwitch.on = defaultBool;
+    cell.accessoryView = projectSwitch;
+    cell.accessoryView.tag = 100+indexPath.row;
+    
+    [projectSwitch addTarget:self action:@selector(didChangeProjectDefaultStatus:) forControlEvents:UIControlEventValueChanged];
     
     return cell;
+}
+
+- (void)didChangeProjectDefaultStatus:(id)sender {
+    
+    NSLog(@"Changed default for project on row %i to %i", [sender tag], [sender isOn]);
+    
+    NSMutableArray *defaultBools = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < [self.projects count]; i++) {
+        projectsDict = [projects objectAtIndex: i];
+        if (i == [sender tag]-100) {
+            [defaultBools addObject:[NSNumber numberWithBool:[sender isOn]]];
+        }else{
+            [defaultBools addObject:[NSNumber numberWithBool:[[projectsDict objectForKey:@"Default"] boolValue]]];
+        }
+    };
+    
+    NSLog(@"Default bools = %@", defaultBools);
+    
+    [defaultBools writeToFile:[self dataFilePath] atomically:YES];
+    
+//    [[NSBundle mainBundle] pathForResource:@"Projects" ofType:@"plist"]];
+}
+
+
+- (NSString *)dataFilePath{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:@"defaultProjects.plist"];
 }
 
 /*

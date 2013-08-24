@@ -11,7 +11,9 @@
 @interface RNSettingsViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *defaultProjectsTableView;
-
 @property (weak, nonatomic) IBOutlet UITextField *eventNameField;
+@property (nonatomic, strong) NSMutableArray *projects;
+@property (nonatomic, strong) NSDictionary *projectsDict;
+@property (nonatomic, strong) NSMutableArray *defaultBools;
 
 @end

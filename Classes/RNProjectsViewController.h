@@ -11,7 +11,6 @@
 @interface RNProjectsViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet UITableView *projectsTableView;
-
 @property (nonatomic, strong) NSMutableArray *projects;
 
 @end

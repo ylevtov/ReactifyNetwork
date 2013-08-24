@@ -28,11 +28,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    recipients = [[NSMutableArray alloc] initWithCapacity:100];
+    
     self.inputEMailField.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.inputEMailField becomeFirstResponder];
+    if (recipients.count == 0) {
+        [self.inputEMailField becomeFirstResponder];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,16 +49,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 1;
+    return [recipients count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -64,7 +66,7 @@
     
     // Configure the cell...
     
-    cell.textLabel.text = @"Test";
+    cell.textLabel.text = [NSString stringWithString:[recipients objectAtIndex:indexPath.row]];
     
     return cell;
 }
@@ -129,10 +131,16 @@
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     
-    NSString *newCompName = self.inputEMailField.text;
+    NSString *inputEMail = self.inputEMailField.text;
     
-    if (newCompName != nil && ![newCompName isEqualToString:@""]) {
-        NSLog(@"Input = %@", newCompName);
+    if (inputEMail != nil && ![inputEMail isEqualToString:@""]) {
+        [recipients addObject:inputEMail];
+        
+        NSLog(@"Recipients = %@", recipients);
+        
+        [self.recipientsTableView reloadData];
+        
+        self.inputEMailField.text = @"";
         
     } else {
         

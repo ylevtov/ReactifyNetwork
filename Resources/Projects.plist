@@ -8,7 +8,7 @@
 		<key>URL</key>
 		<string>www.reactifymusic.com/Projects/Loud-Blue</string>
 		<key>Default</key>
-		<false/>
+		<true/>
 	</dict>
 	<dict>
 		<key>Title</key>
@@ -24,7 +24,7 @@
 		<key>URL</key>
 		<string>www.reactifymusic.com/Projects/CTRL</string>
 		<key>Default</key>
-		<false/>
+		<true/>
 	</dict>
 	<dict>
 		<key>Title</key>

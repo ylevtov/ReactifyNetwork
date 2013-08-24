@@ -66,6 +66,12 @@
     NSDictionary *temp = [projects objectAtIndex: indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@", [temp objectForKey:@"Title"]];
     
+    UISwitch *projectSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 70, 20)];
+    BOOL defaultBool = [[temp objectForKey:@"Default"] boolValue];
+    NSLog(@"Project title and default: %@, %i", [temp objectForKey:@"Title"], defaultBool);
+    projectSwitch.on = defaultBool;
+    cell.accessoryView = projectSwitch;
+    
     return cell;
 }
 

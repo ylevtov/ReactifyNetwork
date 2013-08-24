@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RNRecipientsViewController : UIViewController <UITextFieldDelegate>
+@interface RNRecipientsViewController : UIViewController <UITextFieldDelegate> {
+    NSMutableArray *recipients;
+}
 
 @property (nonatomic, weak) IBOutlet UITableView *recipientsTableView;
-
 @property (weak, nonatomic) IBOutlet UITextField *inputEMailField;
 
 @end
