@@ -7,11 +7,39 @@
 //
 
 #import "RNAppDelegate.h"
+#import "RNPerson.h"
+#import "RNLogViewController.h"
 
-@implementation RNAppDelegate
+@implementation RNAppDelegate {
+    NSMutableArray *persons;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    persons = [NSMutableArray arrayWithCapacity:20];
+    
+    RNPerson *person = [[RNPerson alloc] init];
+    person.firstName = @"Yuli";
+    person.lastName = @"Levtov";
+    person.eMailAddress = @"yuli@reactifymusic.com";
+    [persons addObject:person];
+    
+    person = [[RNPerson alloc] init];
+    person.firstName = @"Ragnar";
+    person.lastName = @"Hrafnkelsson";
+    person.eMailAddress = @"ragnar@reactifymusic.com";
+    [persons addObject:person];
+    
+    person = [[RNPerson alloc] init];
+    person.firstName = @"Mikey";
+    person.lastName = @"Erskine";
+    person.eMailAddress = @"mikey@reactifymusic.com";
+    [persons addObject:person];
+    
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+	RNLogViewController *logViewController = [[tabBarController viewControllers] objectAtIndex:3];
+	logViewController.persons = persons;
+    
     // Override point for customization after application launch.
     return YES;
 }

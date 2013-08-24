@@ -18,6 +18,8 @@
 		8BA6C21C17C911DC0086BB9C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BA6C21B17C911DC0086BB9C /* Default-568h@2x.png */; };
 		8BA6C21F17C911DC0086BB9C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA6C21D17C911DC0086BB9C /* MainStoryboard.storyboard */; };
 		8BA6C22217C911DC0086BB9C /* RNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6C22117C911DC0086BB9C /* RNViewController.m */; };
+		8BA6C22D17C91B070086BB9C /* RNPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6C22C17C91B070086BB9C /* RNPerson.m */; };
+		8BA6C23017C91E900086BB9C /* RNLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6C22F17C91E900086BB9C /* RNLogViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,10 @@
 		8BA6C21E17C911DC0086BB9C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		8BA6C22017C911DC0086BB9C /* RNViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNViewController.h; sourceTree = "<group>"; };
 		8BA6C22117C911DC0086BB9C /* RNViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNViewController.m; sourceTree = "<group>"; };
+		8BA6C22B17C91B070086BB9C /* RNPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNPerson.h; path = Classes/RNPerson.h; sourceTree = "<group>"; };
+		8BA6C22C17C91B070086BB9C /* RNPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNPerson.m; path = Classes/RNPerson.m; sourceTree = "<group>"; };
+		8BA6C22E17C91E900086BB9C /* RNLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNLogViewController.h; path = Classes/RNLogViewController.h; sourceTree = "<group>"; };
+		8BA6C22F17C91E900086BB9C /* RNLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNLogViewController.m; path = Classes/RNLogViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,10 @@
 		8BA6C1F917C911DC0086BB9C = {
 			isa = PBXGroup;
 			children = (
+				8BA6C22B17C91B070086BB9C /* RNPerson.h */,
+				8BA6C22C17C91B070086BB9C /* RNPerson.m */,
+				8BA6C22E17C91E900086BB9C /* RNLogViewController.h */,
+				8BA6C22F17C91E900086BB9C /* RNLogViewController.m */,
 				8BA6C20B17C911DC0086BB9C /* ReactifyNetwork */,
 				8BA6C20417C911DC0086BB9C /* Frameworks */,
 				8BA6C20317C911DC0086BB9C /* Products */,
@@ -177,6 +187,8 @@
 				8BA6C21217C911DC0086BB9C /* main.m in Sources */,
 				8BA6C21617C911DC0086BB9C /* RNAppDelegate.m in Sources */,
 				8BA6C22217C911DC0086BB9C /* RNViewController.m in Sources */,
+				8BA6C22D17C91B070086BB9C /* RNPerson.m in Sources */,
+				8BA6C23017C91E900086BB9C /* RNLogViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
