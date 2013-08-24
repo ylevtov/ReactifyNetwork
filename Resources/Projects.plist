@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>Title</key>
+		<string>Loud Blue</string>
+		<key>URL</key>
+		<string>www.reactifymusic.com/Projects/Loud-Blue</string>
+		<key>Default</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>CTRL App</string>
+		<key>URL</key>
+		<string>www.reactifymusic.com/Projects/CTRL</string>
+		<key>Default</key>
+		<true/>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>CTRL Installation</string>
+		<key>URL</key>
+		<string>www.reactifymusic.com/Projects/CTRL</string>
+		<key>Default</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Say What?!</string>
+		<key>URL</key>
+		<string>www.reactifymusic.com/Projects/Say-What</string>
+		<key>Default</key>
+		<false/>
+	</dict>
+	<dict>
+		<key>Title</key>
+		<string>Gagglephone App</string>
+		<key>URL</key>
+		<string>www.reactifymusic.com/Projects/Gagglephone</string>
+		<key>Default</key>
+		<false/>
+	</dict>
+</array>
+</plist>

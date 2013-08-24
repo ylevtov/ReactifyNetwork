@@ -1,21 +1,21 @@
 //
-//  RNLog2ViewController.m
+//  RNProjectsViewController.m
 //  ReactifyNetwork
 //
 //  Created by Yuli A Levtov on 24/08/2013.
 //  Copyright (c) 2013 Reactify. All rights reserved.
 //
 
-#import "RNLogViewController.h"
-#import "RNPerson.h"
+#import "RNProjectsViewController.h"
 
-@interface RNLogViewController ()
+
+@interface RNProjectsViewController ()
 
 @end
 
-@implementation RNLogViewController
+@implementation RNProjectsViewController
 
-@synthesize persons;
+@synthesize projects;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -47,22 +47,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-	return 1;
+    // Return the number of sections.
+    return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView
- numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return [self.persons count];
+    // Return the number of rows in the section.
+    return [self.projects count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell *cell = [tableView
-                             dequeueReusableCellWithIdentifier:@"LogCell"];
-	RNPerson *person = [self.persons objectAtIndex:indexPath.row];
-	cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", person.firstName, person.lastName];
-	cell.detailTextLabel.text = person.eMailAddress;
+    static NSString *CellIdentifier = @"ProjectCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    // Configure the cell...
+    NSDictionary *temp = [projects objectAtIndex: indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", [temp objectForKey:@"Title"]];
     
     return cell;
 }

@@ -9,13 +9,19 @@
 #import "RNAppDelegate.h"
 #import "RNPerson.h"
 #import "RNLogViewController.h"
+#import "RNProjectsViewController.h"
 
 @implementation RNAppDelegate {
     NSMutableArray *persons;
+    NSMutableArray *projects;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    projects = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Projects" ofType:@"plist"]];
+//                    arrayWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"Projects" ofType:@"plist"]];
+//    NSLog(@"Projects: %@", self.projectList);
+    
     persons = [NSMutableArray arrayWithCapacity:20];
     
     RNPerson *person = [[RNPerson alloc] init];
@@ -37,9 +43,13 @@
     [persons addObject:person];
     
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    
 	RNLogViewController *logViewController = [[tabBarController viewControllers] objectAtIndex:3];
 	logViewController.persons = persons;
     
+    RNProjectsViewController *projectsViewController = [[tabBarController viewControllers] objectAtIndex:0];
+    projectsViewController.projects = projects;
+
     // Override point for customization after application launch.
     return YES;
 }

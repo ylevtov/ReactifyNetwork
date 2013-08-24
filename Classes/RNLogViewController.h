@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RNLogViewController : UITableViewController
+@interface RNLogViewController : UIViewController
+
+@property (nonatomic, weak) IBOutlet UITableView *logTableView;
 
 @property (nonatomic, strong) NSMutableArray *persons;
 
