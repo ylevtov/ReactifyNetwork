@@ -142,6 +142,8 @@
         
         self.inputEMailField.text = @"";
         
+        [[super.tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [recipients count]];
+        
     } else {
         
         NSLog(@"newCompName is blank");
