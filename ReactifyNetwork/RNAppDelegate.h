@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RNCore.h"
 
-@interface RNAppDelegate : UIResponder <UIApplicationDelegate>
+@interface RNAppDelegate : UIResponder <UIApplicationDelegate> {
+    RNCore *core;
+}
 
+@property (nonatomic, strong) RNCore *core;
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) NSMutableArray *projectList;
 

@@ -20,6 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    core = [RNCore core];
+    
     projects = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Projects" ofType:@"plist"]];
 //                    arrayWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"Projects" ofType:@"plist"]];
 //    NSLog(@"Projects: %@", self.projectList);
@@ -49,7 +51,7 @@
 	RNLogViewController *logViewController = [[tabBarController viewControllers] objectAtIndex:3];
 	logViewController.persons = persons;
     
-    RNProjectsViewController *projectsViewController = [[tabBarController viewControllers] objectAtIndex:0];
+    RNProjectsViewController *projectsViewController = [[tabBarController viewControllers] objectAtIndex:1];
     projectsViewController.projects = projects;
     
     RNProjectsViewController *settingsViewController = [[tabBarController viewControllers] objectAtIndex:2];

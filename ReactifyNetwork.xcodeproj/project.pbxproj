@@ -24,6 +24,8 @@
 		8BA6C23517C92A0E0086BB9C /* RNProjectsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6C23417C92A0E0086BB9C /* RNProjectsViewController.m */; };
 		8BA6C23B17C936ED0086BB9C /* RNRecipientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6C23A17C936ED0086BB9C /* RNRecipientsViewController.m */; };
 		8BA6C23E17C953180086BB9C /* RNSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6C23D17C953180086BB9C /* RNSettingsViewController.m */; };
+		8BE19C9417CA246A00E19004 /* RNCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE19C9317CA246A00E19004 /* RNCore.m */; };
+		8BE19C9617CA2CF800E19004 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE19C9517CA2CF800E19004 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,9 @@
 		8BA6C23A17C936ED0086BB9C /* RNRecipientsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNRecipientsViewController.m; path = Classes/RNRecipientsViewController.m; sourceTree = "<group>"; };
 		8BA6C23C17C953180086BB9C /* RNSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNSettingsViewController.h; path = Classes/RNSettingsViewController.h; sourceTree = "<group>"; };
 		8BA6C23D17C953180086BB9C /* RNSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNSettingsViewController.m; path = Classes/RNSettingsViewController.m; sourceTree = "<group>"; };
+		8BE19C9217CA246A00E19004 /* RNCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNCore.h; path = Classes/RNCore.h; sourceTree = "<group>"; };
+		8BE19C9317CA246A00E19004 /* RNCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNCore.m; path = Classes/RNCore.m; sourceTree = "<group>"; };
+		8BE19C9517CA2CF800E19004 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BE19C9617CA2CF800E19004 /* MessageUI.framework in Frameworks */,
 				8BA6C20617C911DC0086BB9C /* UIKit.framework in Frameworks */,
 				8BA6C20817C911DC0086BB9C /* Foundation.framework in Frameworks */,
 				8BA6C20A17C911DC0086BB9C /* CoreGraphics.framework in Frameworks */,
@@ -73,6 +79,8 @@
 		8BA6C1F917C911DC0086BB9C = {
 			isa = PBXGroup;
 			children = (
+				8BE19C9217CA246A00E19004 /* RNCore.h */,
+				8BE19C9317CA246A00E19004 /* RNCore.m */,
 				8BA6C22B17C91B070086BB9C /* RNPerson.h */,
 				8BA6C22C17C91B070086BB9C /* RNPerson.m */,
 				8BA6C23317C92A0E0086BB9C /* RNProjectsViewController.h */,
@@ -100,6 +108,7 @@
 		8BA6C20417C911DC0086BB9C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8BE19C9517CA2CF800E19004 /* MessageUI.framework */,
 				8BA6C20517C911DC0086BB9C /* UIKit.framework */,
 				8BA6C20717C911DC0086BB9C /* Foundation.framework */,
 				8BA6C20917C911DC0086BB9C /* CoreGraphics.framework */,
@@ -211,6 +220,7 @@
 				8BA6C23517C92A0E0086BB9C /* RNProjectsViewController.m in Sources */,
 				8BA6C23B17C936ED0086BB9C /* RNRecipientsViewController.m in Sources */,
 				8BA6C23E17C953180086BB9C /* RNSettingsViewController.m in Sources */,
+				8BE19C9417CA246A00E19004 /* RNCore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +343,7 @@
 				8BA6C22717C911DC0086BB9C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

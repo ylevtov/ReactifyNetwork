@@ -7,6 +7,7 @@
 //
 
 #import "RNRecipientsViewController.h"
+#import "RNCore.h"
 
 @interface RNRecipientsViewController ()
 
@@ -28,13 +29,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    recipients = [[NSMutableArray alloc] initWithCapacity:100];
-    
     self.inputEMailField.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if (recipients.count == 0) {
+    if ([[[RNCore core] queuedRecipients] count] == 0) {
         [self.inputEMailField becomeFirstResponder];
     }
 }
@@ -56,7 +55,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [recipients count];
+    return [[[RNCore core] queuedRecipients] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -66,7 +65,7 @@
     
     // Configure the cell...
     
-    cell.textLabel.text = [NSString stringWithString:[recipients objectAtIndex:indexPath.row]];
+    cell.textLabel.text = [NSString stringWithString:[[[RNCore core] queuedRecipients] objectAtIndex:indexPath.row]];
     
     return cell;
 }
@@ -133,16 +132,13 @@
     
     NSString *inputEMail = self.inputEMailField.text;
     
-    if (inputEMail != nil && ![inputEMail isEqualToString:@""]) {
-        [recipients addObject:inputEMail];
-        
-        NSLog(@"Recipients = %@", recipients);
-        
-        [self.recipientsTableView reloadData];
-        
+    if (inputEMail != nil && ![inputEMail isEqualToString:@""]) {       
+        [[RNCore core] addRecipientToQueue:inputEMail];
+             
+        [self.recipientsTableView reloadData];        
         self.inputEMailField.text = @"";
         
-        [[super.tabBarController.viewControllers objectAtIndex:1] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [recipients count]];
+        [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
         
     } else {
         
@@ -171,6 +167,58 @@
     [textField resignFirstResponder];
     
     return YES;
+}
+
+-(IBAction)sendButtonPressed:(id)sender {
+    
+    [self openMailView];
+    
+}
+
+#pragma mark - E-mail
+
+- (void)openMailView{
+    
+//    NSString *photoTitle = [numberItem valueForKey:NameKey];
+    
+    NSString *eMailBody = [[RNCore core] defaultEMailBody];
+    MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+	[mailViewController setSubject:@"Reactify E-Business Card"];
+    [mailViewController setMessageBody:eMailBody isHTML:YES];
+    
+    [mailViewController setBccRecipients:[[RNCore core] queuedRecipients]];
+    
+    //	[mailViewController addAttachmentData:[NSData dataWithData:UIImagePNGRepresentation([UIImage imageNamed:photoFileAsString])] mimeType:@"png" fileName:photoFileAsString];
+	mailViewController.mailComposeDelegate = self;
+	
+    mailViewController.modalPresentationStyle = UIModalPresentationPageSheet;
+
+	[self presentViewController:mailViewController animated:YES completion:nil];
+    
+    
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
+	
+    [self dismissViewControllerAnimated:YES completion:nil];
+	
+	switch (result) {
+		case MFMailComposeResultSent:
+//            [self displayPhotoDetailConsoleMessage:@"PHOTO SENT SUCCESSFULLY"];
+            break;
+		case MFMailComposeResultFailed:
+//            [self displayPhotoDetailConsoleMessage:@"PHOTO SENDING FAILED"];
+            break;
+        case MFMailComposeResultCancelled:
+//            [self displayPhotoDetailConsoleMessage:@"PHOTO SENDING CANCELLED"];
+            break;
+		case MFMailComposeResultSaved:
+//            [self displayPhotoDetailConsoleMessage:@"PHOTO DRAFT SAVED"];
+            break;
+		default:
+//            [self displayPhotoDetailConsoleMessage:@"PHOTO SENDING CANCELLED"];
+			break;
+	}
 }
 
 @end
