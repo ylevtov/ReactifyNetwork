@@ -9,6 +9,8 @@
 		<string>www.reactifymusic.com/Projects/Loud-Blue</string>
 		<key>Default</key>
 		<true/>
+		<key>HTML</key>
+		<string>&lt;p&gt;&lt;b&gt;&lt;a href=&quot;www.google.com&quot;&gt;Loud Blue&lt;/a&gt;&lt;/b&gt;&lt;/br&gt;&lt;i&gt;Interactive installation allowing visitors to control various effects and synthesisers, as well as accompanying lighting effects, with handheld gestural devices.&lt;/i&gt;&lt;/p&gt;</string>
 	</dict>
 	<dict>
 		<key>Title</key>
@@ -17,6 +19,18 @@
 		<string>www.reactifymusic.com/Projects/CTRL</string>
 		<key>Default</key>
 		<true/>
+		<key>HTML</key>
+		<string>&lt;div style=&quot;position:relative; a:link {color:#FFFFFF;}&quot;&gt;    
+  &lt;img src=&quot;bcard-bg-yuli.png&quot; alt=&quot;&quot; /&gt;
+  &lt;div style=&quot;position:absolute;left:45;top:230; font-size:22px; font-family:sans-serif;&quot; &gt;
+    &lt;a href=&quot;mailto:yuli@reactifymusic.com&quot;&gt;yuli@reactifymusic.com&lt;/a&gt; &lt;/br&gt;
+    &lt;div style=&quot;padding-top:4px&quot;&gt;+44 7843 667 273&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;position:absolute;left:427;top:214;&quot;&gt;
+  	&lt;a href=&quot;http://uk.linkedin.com/in/yulilevtov&quot;&gt;&lt;img src=&quot;li-logo.png&quot;&gt;&lt;/a&gt;
+  	&lt;a href=&quot;http://www.twitter.com/ylevtov&quot; style=&quot;padding-left:18px;&quot;&gt;&lt;img src=&quot;tw-logo.png&quot;&gt;&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</string>
 	</dict>
 	<dict>
 		<key>Title</key>
@@ -25,6 +39,8 @@
 		<string>www.reactifymusic.com/Projects/CTRL</string>
 		<key>Default</key>
 		<true/>
+		<key>HTML</key>
+		<string>&lt;p&gt;&lt;b&gt;Loud Blue&lt;/b&gt;&lt;/br&gt;&lt;i&gt;Interactive installation allowing visitors to control various effects and synthesisers, as well as accompanying lighting effects, with handheld gestural devices.&lt;/i&gt;&lt;/p&gt;</string>
 	</dict>
 	<dict>
 		<key>Title</key>
@@ -33,6 +49,8 @@
 		<string>www.reactifymusic.com/Projects/Say-What</string>
 		<key>Default</key>
 		<false/>
+		<key>HTML</key>
+		<string>&lt;p&gt;&lt;b&gt;Loud Blue&lt;/b&gt;&lt;/br&gt;&lt;i&gt;Interactive installation allowing visitors to control various effects and synthesisers, as well as accompanying lighting effects, with handheld gestural devices.&lt;/i&gt;&lt;/p&gt;</string>
 	</dict>
 	<dict>
 		<key>Title</key>
@@ -41,6 +59,8 @@
 		<string>www.reactifymusic.com/Projects/Gagglephone</string>
 		<key>Default</key>
 		<false/>
+		<key>HTML</key>
+		<string>&lt;p&gt;&lt;b&gt;Loud Blue&lt;/b&gt;&lt;/br&gt;&lt;i&gt;Interactive installation allowing visitors to control various effects and synthesisers, as well as accompanying lighting effects, with handheld gestural devices.&lt;/i&gt;&lt;/p&gt;</string>
 	</dict>
 </array>
 </plist>

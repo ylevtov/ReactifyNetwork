@@ -26,6 +26,9 @@
 		8BA6C23E17C953180086BB9C /* RNSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA6C23D17C953180086BB9C /* RNSettingsViewController.m */; };
 		8BE19C9417CA246A00E19004 /* RNCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE19C9317CA246A00E19004 /* RNCore.m */; };
 		8BE19C9617CA2CF800E19004 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE19C9517CA2CF800E19004 /* MessageUI.framework */; };
+		8BE8A38617CD239D00DD1B2B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BE8A38517CD239D00DD1B2B /* CoreLocation.framework */; };
+		8BE8A38917CD2A3800DD1B2B /* Yuli Levtov.vcf in Resources */ = {isa = PBXBuildFile; fileRef = 8BE8A38817CD2A3800DD1B2B /* Yuli Levtov.vcf */; };
+		8BE8A39117CD3AD900DD1B2B /* www in Resources */ = {isa = PBXBuildFile; fileRef = 8BE8A39017CD3AD900DD1B2B /* www */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +62,9 @@
 		8BE19C9217CA246A00E19004 /* RNCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNCore.h; path = Classes/RNCore.h; sourceTree = "<group>"; };
 		8BE19C9317CA246A00E19004 /* RNCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNCore.m; path = Classes/RNCore.m; sourceTree = "<group>"; };
 		8BE19C9517CA2CF800E19004 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		8BE8A38517CD239D00DD1B2B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8BE8A38817CD2A3800DD1B2B /* Yuli Levtov.vcf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Yuli Levtov.vcf"; sourceTree = "<group>"; };
+		8BE8A39017CD3AD900DD1B2B /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BE8A38617CD239D00DD1B2B /* CoreLocation.framework in Frameworks */,
 				8BE19C9617CA2CF800E19004 /* MessageUI.framework in Frameworks */,
 				8BA6C20617C911DC0086BB9C /* UIKit.framework in Frameworks */,
 				8BA6C20817C911DC0086BB9C /* Foundation.framework in Frameworks */,
@@ -91,6 +98,7 @@
 				8BA6C23D17C953180086BB9C /* RNSettingsViewController.m */,
 				8BA6C22E17C91E900086BB9C /* RNLogViewController.h */,
 				8BA6C22F17C91E900086BB9C /* RNLogViewController.m */,
+				8BE8A38717CD2A2A00DD1B2B /* Resources */,
 				8BA6C20B17C911DC0086BB9C /* ReactifyNetwork */,
 				8BA6C20417C911DC0086BB9C /* Frameworks */,
 				8BA6C20317C911DC0086BB9C /* Products */,
@@ -108,6 +116,7 @@
 		8BA6C20417C911DC0086BB9C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8BE8A38517CD239D00DD1B2B /* CoreLocation.framework */,
 				8BE19C9517CA2CF800E19004 /* MessageUI.framework */,
 				8BA6C20517C911DC0086BB9C /* UIKit.framework */,
 				8BA6C20717C911DC0086BB9C /* Foundation.framework */,
@@ -142,6 +151,16 @@
 				8BA6C21B17C911DC0086BB9C /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8BE8A38717CD2A2A00DD1B2B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8BE8A39017CD3AD900DD1B2B /* www */,
+				8BE8A38817CD2A3800DD1B2B /* Yuli Levtov.vcf */,
+			);
+			name = Resources;
+			path = ReactifyNetwork;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +221,8 @@
 				8BA6C21C17C911DC0086BB9C /* Default-568h@2x.png in Resources */,
 				8BA6C21F17C911DC0086BB9C /* MainStoryboard.storyboard in Resources */,
 				8BA6C23217C929560086BB9C /* Projects.plist in Resources */,
+				8BE8A38917CD2A3800DD1B2B /* Yuli Levtov.vcf in Resources */,
+				8BE8A39117CD3AD900DD1B2B /* www in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

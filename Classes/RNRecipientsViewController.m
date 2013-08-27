@@ -184,15 +184,21 @@
     NSString *eMailBody = [[RNCore core] defaultEMailBody];
     MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
 	[mailViewController setSubject:@"Reactify E-Business Card"];
+    
+    [mailViewController addAttachmentData:[NSData dataWithData:UIImagePNGRepresentation([UIImage imageNamed:@"bcard-bg-yuli"])] mimeType:@"png" fileName:@"Yuli Levtov.png"];
+    
     [mailViewController setMessageBody:eMailBody isHTML:YES];
     
     [mailViewController setBccRecipients:[[RNCore core] queuedRecipients]];
     
-    //	[mailViewController addAttachmentData:[NSData dataWithData:UIImagePNGRepresentation([UIImage imageNamed:photoFileAsString])] mimeType:@"png" fileName:photoFileAsString];
 	mailViewController.mailComposeDelegate = self;
 	
     mailViewController.modalPresentationStyle = UIModalPresentationPageSheet;
 
+    NSData *vcfData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Yuli Levtov" ofType:@"vcf"]];
+    
+    [mailViewController addAttachmentData:vcfData mimeType:@"text/x-vcard" fileName:@"Yuli Levtov.vcf"];
+    
 	[self presentViewController:mailViewController animated:YES completion:nil];
     
     
@@ -204,19 +210,19 @@
 	
 	switch (result) {
 		case MFMailComposeResultSent:
-//            [self displayPhotoDetailConsoleMessage:@"PHOTO SENT SUCCESSFULLY"];
+            NSLog(@"PHOTO SENT SUCCESSFULLY");
             break;
 		case MFMailComposeResultFailed:
-//            [self displayPhotoDetailConsoleMessage:@"PHOTO SENDING FAILED"];
+            NSLog(@"PHOTO SENDING FAILED");
             break;
         case MFMailComposeResultCancelled:
-//            [self displayPhotoDetailConsoleMessage:@"PHOTO SENDING CANCELLED"];
+            NSLog(@"PHOTO SENDING CANCELLED");
             break;
 		case MFMailComposeResultSaved:
-//            [self displayPhotoDetailConsoleMessage:@"PHOTO DRAFT SAVED"];
+            NSLog(@"PHOTO DRAFT SAVED");
             break;
 		default:
-//            [self displayPhotoDetailConsoleMessage:@"PHOTO SENDING CANCELLED"];
+            NSLog(@"PHOTO SENDING CANCELLED");
 			break;
 	}
 }

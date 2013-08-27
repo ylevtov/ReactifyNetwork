@@ -7,7 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface RNCore : NSObject
+@interface RNCore : NSObject {
+    CLLocationManager *locationManager;
+}
+
+@property (nonatomic, strong) NSMutableArray *queuedRecipients;
+@property (nonatomic, strong) NSString *defaultEMailBody;
+@property (nonatomic, strong) NSMutableArray *projects;
+@property (nonatomic, strong) NSMutableArray *includedProjects;
+
++ (RNCore *)core;
+- (void)addRecipientToQueue:(NSString *)email;
 
 @end
