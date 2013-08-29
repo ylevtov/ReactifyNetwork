@@ -200,8 +200,6 @@
     [mailViewController addAttachmentData:vcfData mimeType:@"text/x-vcard" fileName:@"Yuli Levtov.vcf"];
     
 	[self presentViewController:mailViewController animated:YES completion:nil];
-    
-    
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
@@ -211,12 +209,21 @@
 	switch (result) {
 		case MFMailComposeResultSent:
             NSLog(@"PHOTO SENT SUCCESSFULLY");
+            [[RNCore core] saveSentRecipients];
+            [self.recipientsTableView reloadData];            
+            [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
             break;
 		case MFMailComposeResultFailed:
             NSLog(@"PHOTO SENDING FAILED");
+            [[RNCore core] saveSentRecipients];
+            [self.recipientsTableView reloadData];
+            [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
             break;
         case MFMailComposeResultCancelled:
             NSLog(@"PHOTO SENDING CANCELLED");
+            [[RNCore core] saveSentRecipients];
+            [self.recipientsTableView reloadData];
+            [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
             break;
 		case MFMailComposeResultSaved:
             NSLog(@"PHOTO DRAFT SAVED");

@@ -8,6 +8,7 @@
 
 #import "RNLogViewController.h"
 #import "RNPerson.h"
+#import "RNCore.h"
 
 @interface RNLogViewController ()
 
@@ -53,17 +54,16 @@
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-	return [self.persons count];
+	return [[[RNCore core] savedRecipients] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	UITableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:@"LogCell"];
-	RNPerson *person = [self.persons objectAtIndex:indexPath.row];
-	cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", person.firstName, person.lastName];
-	cell.detailTextLabel.text = person.eMailAddress;
-    
+    NSString *eMail = [[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"email"];
+
+	cell.textLabel.text = [NSString stringWithFormat:@"%@", eMail];    
     return cell;
 }
 
@@ -110,6 +110,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString *givenEMail = [[[tableView cellForRowAtIndexPath:indexPath] textLabel] text];
+    
+    [self addPerson:givenEMail];
+    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -117,6 +121,42 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+
+- (void)addPerson:(NSString *)givenEMail {
+    NSLog(@"%s, %@", __func__, givenEMail);
+    
+//    NSString *givenEMail = [self tableView:tableView cellForRowAtIndexPath:sender.row];
+    
+    ABRecordRef aRecord = ABPersonCreate();
+    CFErrorRef anError = NULL;
+    
+    ABMutableMultiValueRef multiEmail = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+    ABMultiValueAddValueAndLabel(multiEmail, (__bridge CFStringRef)givenEMail, kABWorkLabel, NULL);
+    ABRecordSetValue(aRecord, kABPersonEmailProperty, multiEmail, &anError);
+    CFRelease(multiEmail);
+    
+    CFStringRef firstName, lastName;
+    firstName = ABRecordCopyValue(aRecord, kABPersonFirstNameProperty);
+    lastName  = ABRecordCopyValue(aRecord, kABPersonLastNameProperty);
+    
+    ABUnknownPersonViewController *view = [[ABUnknownPersonViewController alloc] init];
+    
+    view.unknownPersonViewDelegate = self;
+    view.displayedPerson = aRecord; // Assume person is already defined.
+    view.allowsAddingToAddressBook = YES;
+    
+    UINavigationController *newNavigationController = [[UINavigationController alloc]
+                                                       initWithRootViewController:view];
+    
+    [self presentViewController:newNavigationController animated:YES completion:NULL];
+}
+
+- (void)unknownPersonViewController:(ABUnknownPersonViewController *)unknownCardViewController didResolveToPerson:(ABRecordRef)person {
+    NSLog(@"Did resolve to person: %@", person);
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

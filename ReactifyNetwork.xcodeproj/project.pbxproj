@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B966E9617D00F1600A9B6D3 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B966E9417D00F1600A9B6D3 /* AddressBook.framework */; };
+		8B966E9717D00F1600A9B6D3 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B966E9517D00F1600A9B6D3 /* AddressBookUI.framework */; };
 		8BA6C20617C911DC0086BB9C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BA6C20517C911DC0086BB9C /* UIKit.framework */; };
 		8BA6C20817C911DC0086BB9C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BA6C20717C911DC0086BB9C /* Foundation.framework */; };
 		8BA6C20A17C911DC0086BB9C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BA6C20917C911DC0086BB9C /* CoreGraphics.framework */; };
@@ -32,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B966E9417D00F1600A9B6D3 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		8B966E9517D00F1600A9B6D3 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		8BA6C20217C911DC0086BB9C /* ReactifyNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactifyNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA6C20517C911DC0086BB9C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8BA6C20717C911DC0086BB9C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -72,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B966E9617D00F1600A9B6D3 /* AddressBook.framework in Frameworks */,
+				8B966E9717D00F1600A9B6D3 /* AddressBookUI.framework in Frameworks */,
 				8BE8A38617CD239D00DD1B2B /* CoreLocation.framework in Frameworks */,
 				8BE19C9617CA2CF800E19004 /* MessageUI.framework in Frameworks */,
 				8BA6C20617C911DC0086BB9C /* UIKit.framework in Frameworks */,
@@ -86,6 +92,8 @@
 		8BA6C1F917C911DC0086BB9C = {
 			isa = PBXGroup;
 			children = (
+				8B966E9417D00F1600A9B6D3 /* AddressBook.framework */,
+				8B966E9517D00F1600A9B6D3 /* AddressBookUI.framework */,
 				8BE19C9217CA246A00E19004 /* RNCore.h */,
 				8BE19C9317CA246A00E19004 /* RNCore.m */,
 				8BA6C22B17C91B070086BB9C /* RNPerson.h */,

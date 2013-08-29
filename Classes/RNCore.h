@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+#define kFilename @"savedRecipients.plist"
+
 @interface RNCore : NSObject {
     CLLocationManager *locationManager;
 }
@@ -17,8 +19,12 @@
 @property (nonatomic, strong) NSString *defaultEMailBody;
 @property (nonatomic, strong) NSMutableArray *projects;
 @property (nonatomic, strong) NSMutableArray *includedProjects;
+@property (nonatomic, strong) NSMutableArray *savedRecipients;
+@property (nonatomic, retain) NSArray* paths;
+@property (nonatomic, retain) NSString* documentsDirectory;
 
 + (RNCore *)core;
 - (void)addRecipientToQueue:(NSString *)email;
+- (void)saveSentRecipients;
 
 @end

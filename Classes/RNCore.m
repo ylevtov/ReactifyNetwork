@@ -12,7 +12,7 @@ static RNCore *sharedCore;
 
 @implementation RNCore
 
-@synthesize queuedRecipients, defaultEMailBody, projects, includedProjects;
+@synthesize queuedRecipients, defaultEMailBody, projects, includedProjects, paths, documentsDirectory, savedRecipients;
 
 +(void)initialize {
 	static BOOL initialised = NO;
@@ -29,6 +29,12 @@ static RNCore *sharedCore;
             sharedCore = [[self alloc] init];
 	}
 	return sharedCore;
+}
+
+- (NSString *)dataFilePath{
+    paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    documentsDirectory = [paths objectAtIndex:0];
+    return [documentsDirectory stringByAppendingPathComponent:kFilename];
 }
 
 -(id)init {
@@ -64,6 +70,15 @@ static RNCore *sharedCore;
     
     NSLog(@"%@", [self deviceLocation]);
     
+    NSString *filePath = [self dataFilePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        savedRecipients = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
+        NSLog(@"savedRecipients has loaded with contents of filePath: %@", savedRecipients);
+    }else{
+        savedRecipients = [[NSMutableArray alloc] init];
+        NSLog(@"savedRecipients has been initialized for the first time");
+    }
+    
     return self;
 }
 
@@ -77,12 +92,47 @@ static RNCore *sharedCore;
     NSLog(@"Queued recipients array: %@", queuedRecipients);
 }
 
+-(void)saveSentRecipients {
+    
+    NSMutableArray *unsavedRecipients = [[NSMutableArray alloc] init];
+    
+    NSDictionary* info = [[NSDictionary alloc] init];    
+    for (int i = 0; i < [queuedRecipients count]; i++) {
+        info = [NSDictionary dictionaryWithObjectsAndKeys:
+                [queuedRecipients objectAtIndex:i],
+                @"email",
+                [NSNumber numberWithBool:NO],
+                @"added",
+                @"",
+                @"name",
+                @"",
+                @"meetingPlace",
+                @"",
+                @"meetingDate",
+                nil];
+        
+        [unsavedRecipients addObject:info];
+    }
+    
+    NSLog(@"unsavedRecipients = %@", unsavedRecipients);
+    [savedRecipients addObjectsFromArray:unsavedRecipients];
+    NSLog(@"savedRecipients = %@", savedRecipients);
+    [savedRecipients writeToFile:[self dataFilePath] atomically:YES];
+    [unsavedRecipients removeAllObjects];
+    
+}
+
 -(void)editDefaultEMailBody {
     defaultEMailBody = [NSString stringWithFormat:@"<p>Nice to meet you!</p></br><p>Find attached my details, as well as some information on some of the projects we've been working on recently.</p>"];
 }
 
 -(void)editIncludedProjects {
 //    includedProjects = [NSMutableArray arrayWithObjects:@"<a href\"www.google.com\">Google</a>", "<a href\"www.faceboook.com\">Facebook</a>", nil];
+}
+
+- (void)applicationWillResignActive:(NSNotification *)notification {
+    NSLog(@"appWillResignActive code has run");
+//    [unlockedPhotosArray2 writeToFile:[self dataFilePath] atomically:YES];
 }
 
 @end

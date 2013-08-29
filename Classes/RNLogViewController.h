@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AddressBookUI/AddressBookUI.h>
 
-@interface RNLogViewController : UIViewController
+@interface RNLogViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, ABNewPersonViewControllerDelegate, ABUnknownPersonViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *logTableView;
 
 @property (nonatomic, strong) NSMutableArray *persons;
+
+- (void)addPerson:(id)sender;
 
 @end
