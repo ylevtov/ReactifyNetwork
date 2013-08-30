@@ -61,9 +61,16 @@
 {
 	UITableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:@"LogCell"];
+    
     NSString *eMail = [[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"email"];
-
-	cell.textLabel.text = [NSString stringWithFormat:@"%@", eMail];    
+    NSString *name = [[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"name"];
+    
+    if ([[[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"added"] intValue] == 0) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", eMail];
+    }else{
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", name];
+    }
+    
     return cell;
 }
 
@@ -114,6 +121,8 @@
     
     [self addPerson:givenEMail];
     
+    indexOfPersonAdded = indexPath.row;
+    
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -153,8 +162,15 @@
     [self presentViewController:newNavigationController animated:YES completion:NULL];
 }
 
-- (void)unknownPersonViewController:(ABUnknownPersonViewController *)unknownCardViewController didResolveToPerson:(ABRecordRef)person {
-    NSLog(@"Did resolve to person: %@", person);
+- (void)unknownPersonViewController:(ABUnknownPersonViewController *)unknownCardViewController didResolveToPerson:(ABRecordRef)person {    
+    NSString *firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    NSString *lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    
+    NSString *name = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+    
+    NSLog(@"Did resolve to person: %@", name);
+    
+    [[RNCore core] addNameToRecipient:indexOfPersonAdded :name];
     
     [self dismissViewControllerAnimated:YES completion:NULL];
 }

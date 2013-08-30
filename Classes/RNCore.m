@@ -119,7 +119,15 @@ static RNCore *sharedCore;
     NSLog(@"savedRecipients = %@", savedRecipients);
     [savedRecipients writeToFile:[self dataFilePath] atomically:YES];
     [unsavedRecipients removeAllObjects];
-    
+}
+
+-(void)addNameToRecipient:(int)indexOfRecipient:(NSString *)name{
+    NSMutableDictionary *recipientToUpdate = [savedRecipients objectAtIndex:indexOfRecipient];
+    NSLog(@"About to update this recipient: %@", recipientToUpdate);
+    [recipientToUpdate setObject:name forKey:@"name"];
+    [recipientToUpdate setObject:@1 forKey:@"added"];
+    NSLog(@"Updated this recipient to: %@", recipientToUpdate);
+
 }
 
 -(void)editDefaultEMailBody {

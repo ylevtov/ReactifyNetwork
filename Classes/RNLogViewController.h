@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
 
-@interface RNLogViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, ABNewPersonViewControllerDelegate, ABUnknownPersonViewControllerDelegate>
+@interface RNLogViewController : UIViewController <ABPeoplePickerNavigationControllerDelegate, ABNewPersonViewControllerDelegate, ABUnknownPersonViewControllerDelegate> {
+    int indexOfPersonAdded;
+}
 
 @property (nonatomic, weak) IBOutlet UITableView *logTableView;
 
