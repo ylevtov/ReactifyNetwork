@@ -11,7 +11,7 @@
 #import "RNLogViewController.h"
 #import "RNProjectsViewController.h"
 
-#define kFilename @"defaultProjects.plist"
+#define kProjectsFilename @"defaultProjects.plist"
 
 @implementation RNAppDelegate {
     NSMutableArray *persons;
@@ -65,7 +65,7 @@
 - (NSString *)dataFilePath{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:kFilename];
+    return [documentsDirectory stringByAppendingPathComponent:kProjectsFilename];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

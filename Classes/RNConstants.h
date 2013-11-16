@@ -6,8 +6,6 @@
 //  Copyright (c) 2013 Reactify. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#pragma mark NSUserDefaults Constants
 
-@interface RNConstants : NSObject
-
-@end
+#define kDefaultsKey_DefaultEventName @"defaultEventName"

@@ -30,6 +30,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    if ([[RNCore core] defaultEventName]) {
+        self.eventNameField.text = [[RNCore core] defaultEventName];
+    }
 }
 
 - (void)didReceiveMemoryWarning

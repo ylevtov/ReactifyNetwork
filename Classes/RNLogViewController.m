@@ -73,10 +73,14 @@
     
 //    NSString *name = [[[[RNCore core] savedRecipientsDict] objectForKeyedSubscript:@""]
     
-    if ([[[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"added"] intValue] == 0) {
+    NSLog(@"%i added already? %@", indexPath.row, [personDict objectForKey:@"added"]);
+    
+    if ([[personDict objectForKey:@"added"] integerValue] == 0) {
         cell.textLabel.text = [NSString stringWithFormat:@"%@", eMail];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@""];
     }else{
         cell.textLabel.text = [NSString stringWithFormat:@"%@", name];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", eMail];
     }
     
     return cell;
@@ -178,7 +182,9 @@
     
     NSLog(@"Did resolve to person: %@", name);
     
-    [[RNCore core] addNameToRecipient:indexOfPersonAdded :name];
+    [[RNCore core] addNameToRecipient:indexOfPersonAdded withName:name];
+
+    [self.logTableView reloadData];
     
     [self dismissViewControllerAnimated:YES completion:NULL];
 }

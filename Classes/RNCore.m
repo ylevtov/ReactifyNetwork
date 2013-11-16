@@ -7,6 +7,7 @@
 //
 
 #import "RNCore.h"
+#import "RNConstants.h"
 
 static RNCore *sharedCore;
 
@@ -79,6 +80,11 @@ static RNCore *sharedCore;
         NSLog(@"savedRecipientsDict has been initialized for the first time");
     }
     
+    if ([[NSUserDefaults standardUserDefaults] valueForKey:kDefaultsKey_DefaultEventName] != nil) {
+        NSLog(@"Setting previous default event name of %@", [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKey_DefaultEventName]);
+        defaultEventName = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKey_DefaultEventName];
+    }
+    
     return self;
 }
 
@@ -133,12 +139,15 @@ static RNCore *sharedCore;
     NSLog(@"File saved successfully? %i", [plist writeToFile:[self dataFilePath] atomically:YES]);
 }
 
--(void)addNameToRecipient:(int)indexOfRecipient:(NSString *)name{
-    NSMutableDictionary *recipientToUpdate = [savedRecipients objectAtIndex:indexOfRecipient];
-    NSLog(@"About to update this recipient: %@", recipientToUpdate);
+-(void)addNameToRecipient:(int)indexOfRecipient withName:(NSString *)name{
+//    NSLog(@"savedRecipients from %s BEFORE: %@", __func__, savedRecipientsDict);
+    NSMutableDictionary *recipientToUpdate = [[savedRecipientsDict objectForKey:[NSNumber numberWithInt:indexOfRecipient]] mutableCopy];
+//    NSLog(@"About to update this recipient: %@", recipientToUpdate);
     [recipientToUpdate setObject:name forKey:@"name"];
     [recipientToUpdate setObject:@1 forKey:@"added"];
-    NSLog(@"Updated this recipient to: %@", recipientToUpdate);
+//    NSLog(@"Updated this recipient to: %@", recipientToUpdate);
+    [savedRecipientsDict setObject:recipientToUpdate forKey:[NSNumber numberWithInt:indexOfRecipient]];
+//    NSLog(@"savedRecipients from %s AFTER: %@", __func__, savedRecipientsDict);
 }
 
 -(void)editDefaultEMailBody {
@@ -148,6 +157,10 @@ static RNCore *sharedCore;
 - (void)setDefaultEventName:(NSString *)eventName {
     defaultEventName = eventName;
     NSLog(@"defaultEventName = %@", defaultEventName);
+    
+    [[NSUserDefaults standardUserDefaults] setValue:defaultEventName forKey:kDefaultsKey_DefaultEventName];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 -(void)editIncludedProjects {

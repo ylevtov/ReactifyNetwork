@@ -28,7 +28,7 @@
 + (RNCore *)core;
 - (void)addRecipientToQueue:(NSString *)email;
 - (void)saveSentRecipients;
-- (void)addNameToRecipient:(int)indexOfRecipient:(NSString *)name;
+- (void)addNameToRecipient:(int)indexOfRecipient withName:(NSString *)name;
 - (void)setDefaultEventName:(NSString *)eventName;
 
 @end

@@ -34,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B64790B1832D8B1005B50E0 /* RNConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNConstants.h; path = Classes/RNConstants.h; sourceTree = "<group>"; };
 		8B966E9417D00F1600A9B6D3 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		8B966E9517D00F1600A9B6D3 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		8BA6C20217C911DC0086BB9C /* ReactifyNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactifyNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,10 +93,9 @@
 		8BA6C1F917C911DC0086BB9C = {
 			isa = PBXGroup;
 			children = (
-				8B966E9417D00F1600A9B6D3 /* AddressBook.framework */,
-				8B966E9517D00F1600A9B6D3 /* AddressBookUI.framework */,
 				8BE19C9217CA246A00E19004 /* RNCore.h */,
 				8BE19C9317CA246A00E19004 /* RNCore.m */,
+				8B64790B1832D8B1005B50E0 /* RNConstants.h */,
 				8BA6C22B17C91B070086BB9C /* RNPerson.h */,
 				8BA6C22C17C91B070086BB9C /* RNPerson.m */,
 				8BA6C23317C92A0E0086BB9C /* RNProjectsViewController.h */,
@@ -124,6 +124,8 @@
 		8BA6C20417C911DC0086BB9C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B966E9417D00F1600A9B6D3 /* AddressBook.framework */,
+				8B966E9517D00F1600A9B6D3 /* AddressBookUI.framework */,
 				8BE8A38517CD239D00DD1B2B /* CoreLocation.framework */,
 				8BE19C9517CA2CF800E19004 /* MessageUI.framework */,
 				8BA6C20517C911DC0086BB9C /* UIKit.framework */,
