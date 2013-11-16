@@ -71,9 +71,20 @@ static RNCore *sharedCore;
     
 //    NSLog(@"%@", [self deviceLocation]);
     
+    /*
     NSString *filePath = [self dataFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         savedRecipientsDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+        NSLog(@"savedRecipientsDict has loaded with contents of filePath: %@", savedRecipientsDict);
+    }else{
+        savedRecipientsDict = [[NSMutableDictionary alloc] init];
+        NSLog(@"savedRecipientsDict has been initialized for the first time");
+    }
+    */
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKey_SavedRecipientsDict]) {
+//        savedRecipientsDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+        savedRecipientsDict = (NSMutableDictionary*) [[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKey_SavedRecipientsDict]] mutableCopy];
         NSLog(@"savedRecipientsDict has loaded with contents of filePath: %@", savedRecipientsDict);
     }else{
         savedRecipientsDict = [[NSMutableDictionary alloc] init];
@@ -98,12 +109,10 @@ static RNCore *sharedCore;
     NSLog(@"Queued recipients array: %@", queuedRecipients);
 }
 
--(void)saveSentRecipients {
-    
-//    NSMutableArray *unsavedRecipients = [[NSMutableArray alloc] init];
+-(void)combineUnsavedAndSavedRecipients:(BOOL)save {
     NSMutableDictionary *unsavedRecipientsDict = [[NSMutableDictionary alloc] init];
     
-    NSDictionary* info = [[NSDictionary alloc] init];    
+    NSDictionary* info = [[NSDictionary alloc] init];
     for (int i = 0; i < [queuedRecipients count]; i++) {
         info = [NSDictionary dictionaryWithObjectsAndKeys:
                 [queuedRecipients objectAtIndex:i],
@@ -117,8 +126,6 @@ static RNCore *sharedCore;
                 @"",
                 @"meetingDate",
                 nil];
-        
-//        [unsavedRecipients addObject:info];
         [unsavedRecipientsDict setObject:info forKey:[NSNumber numberWithInt:i+savedRecipientsDict.count]];
     }
     
@@ -128,15 +135,15 @@ static RNCore *sharedCore;
     [unsavedRecipientsDict removeAllObjects];
     [queuedRecipients removeAllObjects];
     
-    id plist = [NSPropertyListSerialization dataFromPropertyList:(id)savedRecipientsDict
-                                                          format:NSPropertyListXMLFormat_v1_0 errorDescription:nil];
-    
-    NSError *error = nil;
-    [savedRecipientsDict writeToFile:[self dataFilePath] atomically:YES];
-    if (error) {
-        NSLog(@"Fail: %@", [error localizedDescription]);
+    if (save) {
+        [self saveSentRecipients];
     }
-    NSLog(@"File saved successfully? %i", [plist writeToFile:[self dataFilePath] atomically:YES]);
+}
+
+-(void)saveSentRecipients {
+    NSData *saveableData = [NSKeyedArchiver archivedDataWithRootObject:savedRecipientsDict];
+    [[NSUserDefaults standardUserDefaults] setObject:saveableData forKey:kDefaultsKey_SavedRecipientsDict];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(void)addNameToRecipient:(int)indexOfRecipient withName:(NSString *)name{
@@ -148,6 +155,8 @@ static RNCore *sharedCore;
 //    NSLog(@"Updated this recipient to: %@", recipientToUpdate);
     [savedRecipientsDict setObject:recipientToUpdate forKey:[NSNumber numberWithInt:indexOfRecipient]];
 //    NSLog(@"savedRecipients from %s AFTER: %@", __func__, savedRecipientsDict);
+    
+    [self saveSentRecipients];
 }
 
 -(void)editDefaultEMailBody {

@@ -9,3 +9,4 @@
 #pragma mark NSUserDefaults Constants
 
 #define kDefaultsKey_DefaultEventName @"defaultEventName"
+#define kDefaultsKey_SavedRecipientsDict @"savedRecipientsDictionary"

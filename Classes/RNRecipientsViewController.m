@@ -207,28 +207,28 @@
 	
 	switch (result) {
 		case MFMailComposeResultSent:
-            NSLog(@"PHOTO SENT SUCCESSFULLY");
-            [[RNCore core] saveSentRecipients];
+            NSLog(@"EMAIL SENT SUCCESSFULLY");
+            [[RNCore core] combineUnsavedAndSavedRecipients:YES];
             [self.recipientsTableView reloadData];            
             [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
             break;
 		case MFMailComposeResultFailed:
-            NSLog(@"PHOTO SENDING FAILED");
-            [[RNCore core] saveSentRecipients];
+            NSLog(@"EMAIL SENDING FAILED");
+            [[RNCore core] combineUnsavedAndSavedRecipients:YES];
             [self.recipientsTableView reloadData];
             [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
             break;
         case MFMailComposeResultCancelled:
-            NSLog(@"PHOTO SENDING CANCELLED");
-            [[RNCore core] saveSentRecipients];
+            NSLog(@"EMAIL SENDING CANCELLED");
+            [[RNCore core] combineUnsavedAndSavedRecipients:YES];
             [self.recipientsTableView reloadData];
             [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
             break;
 		case MFMailComposeResultSaved:
-            NSLog(@"PHOTO DRAFT SAVED");
+            NSLog(@"EMAIL DRAFT SAVED");
             break;
 		default:
-            NSLog(@"PHOTO SENDING CANCELLED");
+            NSLog(@"EMAIL SENDING CANCELLED");
 			break;
 	}
 }
