@@ -7,6 +7,7 @@
 //
 
 #import "RNSettingsViewController.h"
+#import "RNCore.h"
 
 @interface RNSettingsViewController ()
 
@@ -181,6 +182,8 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    
+    [[RNCore core] setDefaultEventName:textField.text];
     
     return YES;
 }

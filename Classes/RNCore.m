@@ -12,7 +12,7 @@ static RNCore *sharedCore;
 
 @implementation RNCore
 
-@synthesize queuedRecipients, defaultEMailBody, projects, includedProjects, paths, documentsDirectory, savedRecipients;
+@synthesize queuedRecipients, defaultEMailBody, projects, includedProjects, paths, documentsDirectory, savedRecipients, savedRecipientsDict, defaultEventName;
 
 +(void)initialize {
 	static BOOL initialised = NO;
@@ -34,7 +34,7 @@ static RNCore *sharedCore;
 - (NSString *)dataFilePath{
     paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:kFilename];
+    return [documentsDirectory stringByAppendingPathComponent:kSavedRecipientsFilename];
 }
 
 -(id)init {
@@ -49,11 +49,11 @@ static RNCore *sharedCore;
     locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters; // 100 m
     [locationManager startUpdatingLocation];
     
-    UIApplication *app = [UIApplication sharedApplication];
+//    UIApplication *app = [UIApplication sharedApplication];
     
     projects = [NSMutableArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Projects" ofType:@"plist"]];
     
-    NSLog(@"Projects = %@", projects);
+//    NSLog(@"Projects = %@", projects);
     
     queuedRecipients = [[NSMutableArray alloc] init];
     
@@ -68,15 +68,15 @@ static RNCore *sharedCore;
     
     defaultEMailBody = [NSString stringWithFormat:@"<p>Recent projects:</p><p>%@</p>We met here:</br><img src=\"%@\">", [includedProjects objectAtIndex:0], staticMapURL];
     
-    NSLog(@"%@", [self deviceLocation]);
+//    NSLog(@"%@", [self deviceLocation]);
     
     NSString *filePath = [self dataFilePath];
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        savedRecipients = [[NSMutableArray alloc] initWithContentsOfFile:filePath];
-        NSLog(@"savedRecipients has loaded with contents of filePath: %@", savedRecipients);
+        savedRecipientsDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
+        NSLog(@"savedRecipientsDict has loaded with contents of filePath: %@", savedRecipientsDict);
     }else{
-        savedRecipients = [[NSMutableArray alloc] init];
-        NSLog(@"savedRecipients has been initialized for the first time");
+        savedRecipientsDict = [[NSMutableDictionary alloc] init];
+        NSLog(@"savedRecipientsDict has been initialized for the first time");
     }
     
     return self;
@@ -94,7 +94,8 @@ static RNCore *sharedCore;
 
 -(void)saveSentRecipients {
     
-    NSMutableArray *unsavedRecipients = [[NSMutableArray alloc] init];
+//    NSMutableArray *unsavedRecipients = [[NSMutableArray alloc] init];
+    NSMutableDictionary *unsavedRecipientsDict = [[NSMutableDictionary alloc] init];
     
     NSDictionary* info = [[NSDictionary alloc] init];    
     for (int i = 0; i < [queuedRecipients count]; i++) {
@@ -111,14 +112,25 @@ static RNCore *sharedCore;
                 @"meetingDate",
                 nil];
         
-        [unsavedRecipients addObject:info];
+//        [unsavedRecipients addObject:info];
+        [unsavedRecipientsDict setObject:info forKey:[NSNumber numberWithInt:i+savedRecipientsDict.count]];
     }
     
-    NSLog(@"unsavedRecipients = %@", unsavedRecipients);
-    [savedRecipients addObjectsFromArray:unsavedRecipients];
-    NSLog(@"savedRecipients = %@", savedRecipients);
-    [savedRecipients writeToFile:[self dataFilePath] atomically:YES];
-    [unsavedRecipients removeAllObjects];
+    NSLog(@"unsavedRecipients = %@", unsavedRecipientsDict);
+    [savedRecipientsDict addEntriesFromDictionary:unsavedRecipientsDict];
+    NSLog(@"savedRecipientsDict = %@", savedRecipientsDict);
+    [unsavedRecipientsDict removeAllObjects];
+    [queuedRecipients removeAllObjects];
+    
+    id plist = [NSPropertyListSerialization dataFromPropertyList:(id)savedRecipientsDict
+                                                          format:NSPropertyListXMLFormat_v1_0 errorDescription:nil];
+    
+    NSError *error = nil;
+    [savedRecipientsDict writeToFile:[self dataFilePath] atomically:YES];
+    if (error) {
+        NSLog(@"Fail: %@", [error localizedDescription]);
+    }
+    NSLog(@"File saved successfully? %i", [plist writeToFile:[self dataFilePath] atomically:YES]);
 }
 
 -(void)addNameToRecipient:(int)indexOfRecipient:(NSString *)name{
@@ -127,11 +139,15 @@ static RNCore *sharedCore;
     [recipientToUpdate setObject:name forKey:@"name"];
     [recipientToUpdate setObject:@1 forKey:@"added"];
     NSLog(@"Updated this recipient to: %@", recipientToUpdate);
-
 }
 
 -(void)editDefaultEMailBody {
     defaultEMailBody = [NSString stringWithFormat:@"<p>Nice to meet you!</p></br><p>Find attached my details, as well as some information on some of the projects we've been working on recently.</p>"];
+}
+
+- (void)setDefaultEventName:(NSString *)eventName {
+    defaultEventName = eventName;
+    NSLog(@"defaultEventName = %@", defaultEventName);
 }
 
 -(void)editIncludedProjects {

@@ -63,8 +63,7 @@
     static NSString *CellIdentifier = @"RecipientCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
-    
+    // Configure the cell...    
     cell.textLabel.text = [NSString stringWithString:[[[RNCore core] queuedRecipients] objectAtIndex:indexPath.row]];
     
     return cell;

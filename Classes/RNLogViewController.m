@@ -51,10 +51,9 @@
 	return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView
- numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return [[[RNCore core] savedRecipients] count];
+	return [[[RNCore core] savedRecipientsDict] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,8 +61,17 @@
 	UITableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:@"LogCell"];
     
-    NSString *eMail = [[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"email"];
-    NSString *name = [[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"name"];
+    NSDictionary *personDict = [[[RNCore core] savedRecipientsDict] objectForKey:[NSNumber numberWithInt:indexPath.row]];
+
+    NSLog(@"Persondict = %@", personDict);
+    
+    NSString *eMail = [personDict objectForKey:@"email"];
+    NSString *name = [personDict objectForKey:@"name"];
+    
+//    NSString *eMail = [[[[RNCore core] personDict] objectAtIndex:indexPath.row] objectForKey:@"email"];
+//    NSString *name = [[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"name"];
+    
+//    NSString *name = [[[[RNCore core] savedRecipientsDict] objectForKeyedSubscript:@""]
     
     if ([[[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"added"] intValue] == 0) {
         cell.textLabel.text = [NSString stringWithFormat:@"%@", eMail];
