@@ -36,6 +36,10 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+} 
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.logTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,20 +71,21 @@
     
     NSString *eMail = [personDict objectForKey:@"email"];
     NSString *name = [personDict objectForKey:@"name"];
-    
-//    NSString *eMail = [[[[RNCore core] personDict] objectAtIndex:indexPath.row] objectForKey:@"email"];
-//    NSString *name = [[[[RNCore core] savedRecipients] objectAtIndex:indexPath.row] objectForKey:@"name"];
-    
-//    NSString *name = [[[[RNCore core] savedRecipientsDict] objectForKeyedSubscript:@""]
+    NSString *meetingDate = [personDict objectForKey:@"meetingDate"];
+    NSString *meetingPlace = [personDict objectForKey:@"meetingPlace"];
     
     NSLog(@"%i added already? %@", indexPath.row, [personDict objectForKey:@"added"]);
     
     if ([[personDict objectForKey:@"added"] integerValue] == 0) {
         cell.textLabel.text = [NSString stringWithFormat:@"%@", eMail];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@""];
     }else{
         cell.textLabel.text = [NSString stringWithFormat:@"%@", name];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", eMail];
+    }
+    
+    if ([meetingPlace isEqualToString:@""]) {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", meetingDate];
+    }else{
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ at %@", meetingDate, meetingPlace];
     }
     
     return cell;

@@ -10,3 +10,4 @@
 
 #define kDefaultsKey_DefaultEventName @"defaultEventName"
 #define kDefaultsKey_SavedRecipientsDict @"savedRecipientsDictionary"
+#define kDefaultsKey_DefaultCopy @"defaultCopy"

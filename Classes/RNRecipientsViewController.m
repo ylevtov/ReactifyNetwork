@@ -30,12 +30,24 @@
 	// Do any additional setup after loading the view.
     
     self.inputEMailField.delegate = self;
+    
+    // observe keyboard hide and show notifications to resize the text view appropriately
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    if ([[[RNCore core] queuedRecipients] count] == 0) {
+    NSLog(@"%s", __func__);
+//    if ([[[RNCore core] queuedRecipients] count] == 0) {
         [self.inputEMailField becomeFirstResponder];
-    }
+//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -124,27 +136,38 @@
 #pragma mark - Text field delegate methods
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    if (textField.inputAccessoryView == nil) {
+        textField.inputAccessoryView = self.accessoryView;
+    }
     return YES;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     
+    [self addTextFieldTextToQueuedRecipients];
+    
+    return YES;
+}
+
+- (void)addTextFieldTextToQueuedRecipients {
+    
     NSString *inputEMail = self.inputEMailField.text;
     
-    if (inputEMail != nil && ![inputEMail isEqualToString:@""]) {       
+    if (inputEMail != nil && ![inputEMail isEqualToString:@""]) {
         [[RNCore core] addRecipientToQueue:inputEMail];
-             
-        [self.recipientsTableView reloadData];        
+        
+        [self.recipientsTableView reloadData];
         self.inputEMailField.text = @"";
         
         [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
-        
     } else {
-        
         NSLog(@"newCompName is blank");
     }
-    
-    return YES;
+}
+
+#pragma mark - Accessory view action
+- (IBAction)tappedMe:(id)sender {
+    [self addTextFieldTextToQueuedRecipients];
 }
 
 // Disallow any characters
@@ -204,7 +227,7 @@
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error{
 	
     [self dismissViewControllerAnimated:YES completion:nil];
-	
+    
 	switch (result) {
 		case MFMailComposeResultSent:
             NSLog(@"EMAIL SENT SUCCESSFULLY");
@@ -214,23 +237,82 @@
             break;
 		case MFMailComposeResultFailed:
             NSLog(@"EMAIL SENDING FAILED");
-            [[RNCore core] combineUnsavedAndSavedRecipients:YES];
-            [self.recipientsTableView reloadData];
-            [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
+            [self displayAlertWithError:error];
             break;
         case MFMailComposeResultCancelled:
             NSLog(@"EMAIL SENDING CANCELLED");
-            [[RNCore core] combineUnsavedAndSavedRecipients:YES];
-            [self.recipientsTableView reloadData];
-            [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
             break;
 		case MFMailComposeResultSaved:
             NSLog(@"EMAIL DRAFT SAVED");
+            [[RNCore core] combineUnsavedAndSavedRecipients:YES];
+            [self.recipientsTableView reloadData];
+            [[super.tabBarController.viewControllers objectAtIndex:0] tabBarItem].badgeValue = [NSString stringWithFormat:@"%i", [[[RNCore core] queuedRecipients] count]];
             break;
 		default:
             NSLog(@"EMAIL SENDING CANCELLED");
 			break;
 	}
+}
+
+-(void)displayAlertWithError:(NSError*)error {
+    NSString *errorAsString = [NSString stringWithFormat:@"Error: %@", error];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"E-mail Sending Failed"
+                                                    message:errorAsString
+                                                   delegate: nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+#pragma mark - Responding to keyboard events
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    NSDictionary *userInfo = [notification userInfo];
+    
+    // Get the origin of the keyboard when it's displayed.
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    // Get the top of the keyboard as the y coordinate of its origin in self's view's
+    // coordinate system. The bottom of the text view's frame should align with the top
+    // of the keyboard's final position.
+    //
+    CGRect keyboardRect = [aValue CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    CGFloat keyboardTop = keyboardRect.origin.y;
+    CGRect newTextViewFrame = self.view.bounds;
+    newTextViewFrame.size.height = keyboardTop - self.view.bounds.origin.y;
+    
+    // Get the duration of the animation.
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    // Animate the resize of the text view's frame in sync with the keyboard's appearance.
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    
+    
+    [UIView commitAnimations];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    NSDictionary *userInfo = [notification userInfo];
+    
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    
+    [UIView commitAnimations];
 }
 
 @end

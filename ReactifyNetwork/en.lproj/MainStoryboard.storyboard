@@ -130,12 +130,31 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Recipients" id="s2f-lC-L9B"/>
                     <connections>
+                        <outlet property="accessoryView" destination="E6n-h9-zXZ" id="ABD-h3-HxJ"/>
                         <outlet property="inputEMailField" destination="jE2-UQ-TsD" id="Bdk-9O-2q6"/>
                         <outlet property="recipientsTableView" destination="a6s-BO-RKj" id="TP8-QZ-Grt"/>
                         <outlet property="sendButton" destination="B6m-JY-xW6" id="6wy-ew-PhV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qcT-TO-Ngb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="E6n-h9-zXZ" userLabel="AccessoryView">
+                    <rect key="frame" x="0.0" y="420" width="320" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZJH-vL-n6a">
+                            <rect key="frame" x="215" y="-2" width="100" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="Add another...">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="tappedMe:" destination="q7h-Gu-ffe" eventType="touchUpInside" id="mBd-Uh-ONz"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.7978185968923589" green="0.81040780497036513" blue="0.81116470025510201" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="1186" y="491"/>
         </scene>
@@ -151,8 +170,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MUg-wz-Wpp">
-                                <rect key="frame" x="0.0" y="50" width="320" height="518"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MUg-wz-Wpp">
+                                <rect key="frame" x="0.0" y="50" width="320" height="467"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LogCell" textLabel="1Ig-xT-yAZ" detailTextLabel="fGp-Iy-MiM" style="IBUITableViewCellStyleSubtitle" id="x5k-TV-VWr">

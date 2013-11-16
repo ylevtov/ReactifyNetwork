@@ -63,29 +63,13 @@ static RNCore *sharedCore;
     NSDictionary *temp = [projects objectAtIndex: 0];
     [includedProjects addObject:[NSString stringWithFormat:@"%@", [temp objectForKey:@"HTML"]]];
     
-//    [includedProjects addObject:@"<a href=\"www.facebook.com\">Facebook</a>"];
-    
     NSString *staticMapURL = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/staticmap?center=%@&zoom=14&size=150x100&key=AIzaSyDsKakbooD25RlSH-BX_H7VG5VlDkQyHjU&sensor=true&&markers=size:mid%%7Ccolor:blue%%7C%@", [self deviceLocation], [self deviceLocation]];
     
     defaultEMailBody = [NSString stringWithFormat:@"<p>Recent projects:</p><p>%@</p>We met here:</br><img src=\"%@\">", [includedProjects objectAtIndex:0], staticMapURL];
     
-//    NSLog(@"%@", [self deviceLocation]);
-    
-    /*
-    NSString *filePath = [self dataFilePath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        savedRecipientsDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-        NSLog(@"savedRecipientsDict has loaded with contents of filePath: %@", savedRecipientsDict);
-    }else{
-        savedRecipientsDict = [[NSMutableDictionary alloc] init];
-        NSLog(@"savedRecipientsDict has been initialized for the first time");
-    }
-    */
-    
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKey_SavedRecipientsDict]) {
-//        savedRecipientsDict = [[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
         savedRecipientsDict = (NSMutableDictionary*) [[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:kDefaultsKey_SavedRecipientsDict]] mutableCopy];
-        NSLog(@"savedRecipientsDict has loaded with contents of filePath: %@", savedRecipientsDict);
+        NSLog(@"savedRecipientsDict has loaded with previous contents");
     }else{
         savedRecipientsDict = [[NSMutableDictionary alloc] init];
         NSLog(@"savedRecipientsDict has been initialized for the first time");
@@ -112,6 +96,14 @@ static RNCore *sharedCore;
 -(void)combineUnsavedAndSavedRecipients:(BOOL)save {
     NSMutableDictionary *unsavedRecipientsDict = [[NSMutableDictionary alloc] init];
     
+    NSString *currentDate = [self getCurrentDateAsString];
+    NSString *meetingPlace;
+    if (defaultEventName) {
+        meetingPlace = defaultEventName;
+    }else{
+        meetingPlace = @"";
+    }
+    
     NSDictionary* info = [[NSDictionary alloc] init];
     for (int i = 0; i < [queuedRecipients count]; i++) {
         info = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -121,9 +113,9 @@ static RNCore *sharedCore;
                 @"added",
                 @"",
                 @"name",
-                @"",
+                meetingPlace,
                 @"meetingPlace",
-                @"",
+                currentDate,
                 @"meetingDate",
                 nil];
         [unsavedRecipientsDict setObject:info forKey:[NSNumber numberWithInt:i+savedRecipientsDict.count]];
@@ -131,7 +123,7 @@ static RNCore *sharedCore;
     
     NSLog(@"unsavedRecipients = %@", unsavedRecipientsDict);
     [savedRecipientsDict addEntriesFromDictionary:unsavedRecipientsDict];
-    NSLog(@"savedRecipientsDict = %@", savedRecipientsDict);
+//    NSLog(@"savedRecipientsDict = %@", savedRecipientsDict);
     [unsavedRecipientsDict removeAllObjects];
     [queuedRecipients removeAllObjects];
     
@@ -144,6 +136,19 @@ static RNCore *sharedCore;
     NSData *saveableData = [NSKeyedArchiver archivedDataWithRootObject:savedRecipientsDict];
     [[NSUserDefaults standardUserDefaults] setObject:saveableData forKey:kDefaultsKey_SavedRecipientsDict];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(NSString*)getCurrentDateAsString {
+    NSDate *date = [[NSDate alloc] init];
+    NSLog(@"%@", date);
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy'-'MM'-'dd"];
+    NSString *dateString = [dateFormatter stringFromDate:date];
+    
+    NSLog(@"%@", dateString);
+    
+    return dateString;
 }
 
 -(void)addNameToRecipient:(int)indexOfRecipient withName:(NSString *)name{

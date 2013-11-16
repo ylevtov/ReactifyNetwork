@@ -19,6 +19,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *inputEMailField;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 
+@property (nonatomic, weak) IBOutlet UIView *accessoryView;
+
 -(IBAction)sendButtonPressed:(id)sender;
+
+- (IBAction)tappedMe:(id)sender;
 
 @end
