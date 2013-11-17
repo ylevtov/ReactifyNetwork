@@ -89,7 +89,12 @@ static RNCore *sharedCore;
 
 -(void)addRecipientToQueue:(NSString *)email {
     [queuedRecipients addObject:email];
-    
+    NSLog(@"Queued recipients array: %@", queuedRecipients);
+}
+
+-(void)removeRecipientFromQueue:(NSString *)email {
+    NSLog(@"Removing %@", email);
+    [queuedRecipients removeObject:email];
     NSLog(@"Queued recipients array: %@", queuedRecipients);
 }
 

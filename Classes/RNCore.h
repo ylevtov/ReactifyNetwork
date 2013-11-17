@@ -27,6 +27,7 @@
 
 + (RNCore *)core;
 - (void)addRecipientToQueue:(NSString *)email;
+- (void)removeRecipientFromQueue:(NSString *)email;
 - (void)combineUnsavedAndSavedRecipients:(BOOL)save;
 - (void)saveSentRecipients;
 - (void)addNameToRecipient:(int)indexOfRecipient withName:(NSString *)name;

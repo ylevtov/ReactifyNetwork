@@ -33,6 +33,8 @@
     if ([[RNCore core] defaultEventName]) {
         self.eventNameField.text = [[RNCore core] defaultEventName];
     }
+
+    
 }
 
 - (void)didReceiveMemoryWarning

@@ -56,7 +56,16 @@
     
     RNProjectsViewController *settingsViewController = [[tabBarController viewControllers] objectAtIndex:2];
     settingsViewController.projects = projects;
-
+    
+    [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7) {
+//        [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+//        self.window.clipsToBounds =YES;
+//        self.window.frame =  CGRectMake(0,20,self.window.frame.size.width,self.window.frame.size.height);
+//        self.window.bounds = CGRectMake(0,0, self.window.frame.size.width, self.window.frame.size.height);
+//    }
+    
     // Override point for customization after application launch.
     return YES;
 }
